@@ -1,16 +1,11 @@
-import { useState } from 'react'
-
+import RouterApp from './router';
 
 function App() {
- 
-
   return (
-    <div>
-      <h1 className='App'>
-        TESTE
-      </h1>
+    <div className='App'>
+      <RouterApp />
     </div>
-   )
+  );
 }
 
-export default App
+export default App;
