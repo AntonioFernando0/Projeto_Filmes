@@ -34,6 +34,21 @@ function Filme() {
 
     loadFilme(); // Chamada da função dentro do useEffect
   }, [navigate, id]); // Executa sempre que o ID mudar
+
+  function salvarFilmes(){
+    const minhaLista = localStorage.getItem("@prime-flix")
+    let filmesSalvo = JSON.parse(minhaLista) || [];
+
+    const hasfilme = filmesSalvo.some((filmesSalvo) => filmesSalvo.id === filme.id )
+    if(hasfilme){
+      alert("ESSE FILME JÁ ESTÁ NA LISTA")
+      return;
+
+    }
+    filmesSalvo.push(filme)
+    localStorage.setItem("@prime-flix", JSON.stringify(filmesSalvo))
+    alert("FILME SALVO COM SUCESSO")
+  }
   
   if (loading) {
     return (
@@ -52,11 +67,11 @@ function Filme() {
       <strong>Nota: {filme.vote_average.toFixed(1)}/10</strong> {/* Nota média */}
 
       <div className='area-buttons'>
-          <button>
+          <button onClick={salvarFilmes}>
             Salvar
           </button>
           <button className='link'>
-            <a href={`https://youtube.com/results?search_query=${filme.title} Trailler`}>
+            <a target='blanc' href={`https://youtube.com/results?search_query=${filme.title} Trailler`}>
               Trailler
             </a>
           </button>
