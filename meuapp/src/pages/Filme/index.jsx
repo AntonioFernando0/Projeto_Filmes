@@ -1,13 +1,15 @@
-import { useParams } from 'react-router-dom'; // Hook para pegar parâmetros da URL
+import { useNavigate, useParams } from 'react-router-dom'; // Hook para pegar parâmetros da URL
 import { useEffect, useState } from 'react';  // Hooks do React
 import './filme.css'
 import api from '../../services/api';         // Configuração do axios
 
 function Filme() {
   const { id } = useParams(); // Pega o parâmetro "id" da URL (ex: /filme/123)
+  const navigate = useNavigate()
   
   const [filme, setFilmes] = useState({});    // Armazena os dados do filme
   const [loading, setLoading] = useState(true); // Estado para mostrar "carregando"
+  
 
   useEffect(() => {
     async function loadFilme() {
@@ -23,13 +25,16 @@ function Filme() {
       })
       .catch(() => {
         console.log("Erro ao buscar o filme."); // Erro no fetch
+        navigate("/", {
+          replace: true
+        })
         setLoading(false); // Mesmo com erro, remove o "carregando"
       });
     }
 
     loadFilme(); // Chamada da função dentro do useEffect
-  }, [id]); // Executa sempre que o ID mudar
-
+  }, [navigate, id]); // Executa sempre que o ID mudar
+  
   if (loading) {
     return (
       <div className='filme-info'>
@@ -46,13 +51,13 @@ function Filme() {
       <p> {filme.overview}</p> {/* Sinopse */}
       <strong>Nota: {filme.vote_average.toFixed(1)}/10</strong> {/* Nota média */}
 
-      <div className='area-button'>
+      <div className='area-buttons'>
           <button>
             Salvar
           </button>
-          <button>
-            <a href='#'>
-              Trailer
+          <button className='link'>
+            <a href={`https://youtube.com/results?search_query=${filme.title} Trailler`}>
+              Trailler
             </a>
           </button>
 
