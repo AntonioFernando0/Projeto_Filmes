@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom'; // Hook para pegar pa
 import { useEffect, useState } from 'react';  // Hooks do React
 import './filme.css'
 import api from '../../services/api';         // Configuração do axios
-
+import {toast} from 'react-toastify'
 function Filme() {
   const { id } = useParams(); // Pega o parâmetro "id" da URL (ex: /filme/123)
   const navigate = useNavigate()
@@ -41,13 +41,13 @@ function Filme() {
 
     const hasfilme = filmesSalvo.some((filmesSalvo) => filmesSalvo.id === filme.id )
     if(hasfilme){
-      alert("ESSE FILME JÁ ESTÁ NA LISTA")
+      toast.warn("ESSE FILME JÁ ESTÁ NA LISTA")
       return;
 
     }
     filmesSalvo.push(filme)
     localStorage.setItem("@prime-flix", JSON.stringify(filmesSalvo))
-    alert("FILME SALVO COM SUCESSO")
+    toast.success("FILME SALVO COM SUCESSO")
   }
   
   if (loading) {

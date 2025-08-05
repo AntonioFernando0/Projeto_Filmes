@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'; // Importa os hooks do React: useSt
 import './favoritos.css' // Importa o arquivo CSS para estilização do componente Favoritos
 import { Link } from 'react-router-dom'; // Importa o Link para navegação interna entre páginas do React Router
 
+import  {toast} from 'react-toastify'
+
 function Favoritos() {
     const [filmes, setFilmes] = useState([]) // Cria um estado chamado filmes, inicialmente como array vazio
 
@@ -13,7 +15,9 @@ function Favoritos() {
     function excluirFilme(id) {
         let filtroFilmes = filmes.filter((item) => item.id !== id); // Cria um novo array removendo o item com o id correspondente
         setFilmes(filtroFilmes); // Atualiza o estado com o novo array sem o filme excluído
-        localStorage.setItem("@prime-flix", JSON.stringify(filtroFilmes)) // ⚠️ Aqui há um pequeno erro: o correto seria localStorage.setItem, mas como você pediu para não mudar, apenas sinalizando aqui nos comentários
+        localStorage.setItem("@prime-flix", JSON.stringify(filtroFilmes))
+        toast.success("Filme removido com sucesso")
+         // ⚠️ Aqui há um pequeno erro: o correto seria localStorage.setItem, mas como você pediu para não mudar, apenas sinalizando aqui nos comentários
     }
 
     return (
